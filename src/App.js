@@ -5,7 +5,7 @@ import { Login } from "./Components/Login/Login";
 import { Register } from "./Components/Login/Register";
 import { AdminDashboard } from "./Components/Admin/AdminDashboard";
 import AdminRoutes from "./Components/Auth/AdminRoutes";
-import { UserDashboard } from "./Components/User/UserDashboard";
+import UserDashboard from "./Components/User/UserDashboard";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 

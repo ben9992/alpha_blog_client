@@ -1,7 +1,7 @@
 import axiosDep from 'axios';
 
 const axios = axiosDep.create({
-  baseURL: process.env.REACT_APP_API_SERVER_URL,
+  baseURL: process.env.REACT_APP_API_SERVER_API_URL,
   headers: {
     Authorization: ``,
   },

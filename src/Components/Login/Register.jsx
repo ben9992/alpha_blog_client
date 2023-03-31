@@ -6,11 +6,17 @@ function Register() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
 
   const handleRegister = async () => {
     try {
+      if(!email || !username || !password)
+        return setError('One of the fields is empty.');
+      if(password !== confirmPassword)
+        return setError('Passwords does not match');
+
       const response = await axios.post(`/users/register`, {
         username,
         password,
@@ -42,12 +48,16 @@ function Register() {
               <Input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
             </FormGroup>
             <FormGroup>
+              <Label for="email">Email:</Label>
+              <Input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </FormGroup>
+            <FormGroup>
               <Label for="password">Password:</Label>
               <Input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </FormGroup>
             <FormGroup>
-              <Label for="email">Email:</Label>
-              <Input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <Label for="confirmPassword">Confirm Password:</Label>
+              <Input type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
             </FormGroup>
             <Button color="primary" onClick={handleRegister}>Register</Button>
           </Form>

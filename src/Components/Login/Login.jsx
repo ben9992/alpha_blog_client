@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, FormGroup, Label, Input, Button, Alert } from 'reactstrap';
 import { useNavigate } from "react-router-dom";
-import IsAdminLoggedIn from '../Auth/Auth';
 import { axios, updateToken } from '../Auth/Axios';
 function Login() {
   const navigate = useNavigate();
