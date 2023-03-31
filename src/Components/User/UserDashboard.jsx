@@ -71,7 +71,7 @@ const UserDashboard = () => {
       <Row>
         <Col>
           <h1>Welcome, {user.username}!</h1>
-          <Image src={user.profileImage} roundedCircle />
+          <Image src={process.env.REACT_APP_API_SERVER_URL + user.profileImage} roundedCircle />
           <Form>
             <Form.Group controlId="oldPassword">
               <Form.Label>Old Password</Form.Label>
