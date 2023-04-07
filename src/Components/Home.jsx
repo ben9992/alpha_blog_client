@@ -20,11 +20,10 @@ const Home = () => {
 
   const handleSubmit = (event, postId) => {
     event.preventDefault();
-    saveComment(text, postId)
     setText("")
-    setTimeout(() => {
+    saveComment(text, postId).then(() => {
       getPosts()
-    }, 1000);
+    })
   };
 
   const handleClick = (page) => {
@@ -32,7 +31,7 @@ const Home = () => {
   }
 
   const saveComment = (text, postId) => {
-    axios.post(`/posts/${postId}/comments`, {text})
+    return axios.post(`/posts/${postId}/comments`, {text})
   }
 
   const formatDateTime = (datetime) => {
