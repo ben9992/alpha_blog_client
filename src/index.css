@@ -13,3 +13,7 @@ code {
 }
 
 .rtl { direction: rtl;}
+
+.clickable:hover {
+  cursor: pointer;
+}
