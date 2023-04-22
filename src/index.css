@@ -17,3 +17,8 @@ code {
 .clickable:hover {
   cursor: pointer;
 }
+
+.modal-header.modal-title.h4 {
+  margin-left: 5rem;
+  border-bottom: 0 !important
+}

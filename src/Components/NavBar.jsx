@@ -19,7 +19,7 @@ function NavBar() {
                 <Nav.Link href="/Login">Login</Nav.Link>
                 <Nav.Link href="/Register">Register</Nav.Link>
                 <Nav.Link href="/admin-dashboard">Admin</Nav.Link>
-                <Nav.Link href="/user-dashboard">User</Nav.Link>
+                <Nav.Link href="/user-dashboard">My Settings</Nav.Link>
                 {userId && <Nav.Link href={`/user/${userId}`}>My Profile</Nav.Link>}
 
             </Nav>

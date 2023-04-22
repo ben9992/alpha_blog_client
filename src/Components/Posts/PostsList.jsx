@@ -1,16 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button } from 'reactstrap';
 import { useNavigate } from "react-router-dom";
-import { Card, Form, Image } from 'react-bootstrap';
+import { Card, Form, Image, Modal } from 'react-bootstrap';
 import { axios } from '../Auth/Axios';
-import { IsUserLoggedIn } from '../Auth/Auth';
+import { IsAdminLoggedIn, IsUserLoggedIn } from '../Auth/Auth';
 import NewPost from './NewPost';
+import { Trash3Fill } from 'react-bootstrap-icons';
 
 const PostsList = (props) => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([])
   const [commentText, setCommentText] = useState('');
   const isUserFound = IsUserLoggedIn()
+
+  const [show, setShow] = useState(false);
+  const [confirmType, setConfirmType] = useState("Post");
+  const [postId, setPostId] = useState("");
+  const [commentId, setCommentId] = useState("");
+  const [IsAdminLogIn, setIsAdminLoggedIn] = useState(null);
+  const handleClose = () => setShow(false);
+  const handleShow = (event, postId, commentId = "") => {
+    event.preventDefault()
+    commentId === "" ? setConfirmType("Post") : setConfirmType("Comment")
+    setPostId(postId)
+    setCommentId(commentId)
+    setShow(true);
+  }
+
+  IsAdminLoggedIn().then(res => {
+    setIsAdminLoggedIn(res)
+  })
+
+  const checkUser = (userId) => {
+    const currentUserId = localStorage.getItem('userId');
+      if(!currentUserId)
+        return false
+  
+      if(IsAdminLogIn)
+        return true
+
+      return userId === currentUserId
+  }
+
   useEffect(() => {
     getPosts()
   }, [])
@@ -43,6 +74,25 @@ const PostsList = (props) => {
     getPosts()
   }
 
+  const handleRemovePost = () => {
+    axios.delete(`/posts/${postId}`).then(() => {
+      getPosts()
+    })
+    handleClose()
+  }
+
+  const handleRemoveComment = () => {
+    axios.delete(`/posts/comments/${postId}/${commentId}`).then(() => {
+      getPosts()
+    })
+    handleClose()
+  }
+
+  if (IsAdminLogIn === null) {
+    // Render a loading indicator or a placeholder while the data is being fetched
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
      <NewPost onClose={handleModalClose}/>
@@ -50,28 +100,31 @@ const PostsList = (props) => {
             <div style={{padding: "1rem" }}>
               <Card key={post._id} className="my-3">
                 <Card.Header>
-                  <Row className='clickable' onClick={() => {handleImageClick(post.user._id)}}>
-                    <Col className="col-md-1" style={{"marginRight": "1rem"}}>
+                  <Row>
+                    <Col onClick={() => {handleImageClick(post.user._id)}} className="clickable col-md-1" style={{"marginRight": "1rem"}}>
                       <Image style={{width: "100%"}} src={process.env.REACT_APP_API_SERVER_URL + post.user.profileImage} roundedCircle />
                     </Col>
-                    <Col>
+                    <Col onClick={() => {handleImageClick(post.user._id)}} className="clickable">
                       <Card.Text>{post.user.username}</Card.Text>
                       <Card.Text>{formatDateTime(post.createdAt)}</Card.Text>
                     </Col>
+                    { checkUser(post.user._id) && <Col>
+                      <Button className="btn btn-light" style={{marginLeft: "85%" }} onClick={(event) => {handleShow(event, post._id)}}><Trash3Fill/></Button>
+                    </Col> }
                   </Row>
                 </Card.Header>
                 <Card.Body>
                   <Card.Text className='rtl'>{post.text}</Card.Text>
                 </Card.Body>
                 <Card.Footer className="rtl text-muted">
-                <Card.Text>{post.comments.length} תגובות</Card.Text>
-
+                <Card.Text>{post.comments.length} תגובות
+                </Card.Text>
                 {post.comments.map((comment) => (
                   <Row key={comment._id}>
                     <hr></hr>
                     <Card.Text>{comment.author.username}</Card.Text>
                     <Card.Text>{comment.text}</Card.Text>
-                    <Card.Text> {formatDateTime(comment.createdAt)}</Card.Text>
+                    <Card.Text> {formatDateTime(comment.createdAt)} { checkUser(comment.author.id) && <Button className="btn btn-light" style={{marginRight: "85%" }} onClick={(event) => {handleShow(event, post._id, comment._id)}}><Trash3Fill/></Button> }</Card.Text>
                   </Row>
                 )).reverse()}
 
@@ -92,6 +145,19 @@ const PostsList = (props) => {
               </Card>
             </div>
           ))}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="modal-header">?האם ברצונך למחוק {confirmType === "Post" ? "פוסט" : "תגובה"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            בטל
+          </Button>
+          <Button className="btn btn-danger" onClick={confirmType === "Post" ? () => {handleRemovePost()} : () => {handleRemoveComment()}}>
+            מחק
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
   
