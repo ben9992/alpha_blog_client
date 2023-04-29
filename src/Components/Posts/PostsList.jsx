@@ -6,6 +6,8 @@ import { axios } from '../Auth/Axios';
 import { IsAdminLoggedIn, IsUserLoggedIn } from '../Auth/Auth';
 import NewPost from './NewPost';
 import { Trash3Fill } from 'react-bootstrap-icons';
+import EditPost from './EditPost';
+import EditComment from './EditComment';
 
 const PostsList = (props) => {
   const navigate = useNavigate();
@@ -95,7 +97,7 @@ const PostsList = (props) => {
 
   return (
     <>
-     <NewPost onClose={handleModalClose}/>
+     {isUserFound && <NewPost onClose={handleModalClose}/> }
           {posts.map((post) => (
             <div style={{padding: "1rem" }}>
               <Card key={post._id} className="my-3">
@@ -109,7 +111,10 @@ const PostsList = (props) => {
                       <Card.Text>{formatDateTime(post.createdAt)}</Card.Text>
                     </Col>
                     { checkUser(post.user._id) && <Col>
-                      <Button className="btn btn-light" style={{marginLeft: "85%" }} onClick={(event) => {handleShow(event, post._id)}}><Trash3Fill/></Button>
+                      <div className='col-md-1' style={{marginLeft: "85%", display: "flex" }}>
+                        <Button className="btn btn-light"onClick={(event) => {handleShow(event, post._id)}}><Trash3Fill/></Button>
+                        <EditPost postData={post.text} postId={post._id} onClose={handleModalClose}></EditPost>
+                      </div>
                     </Col> }
                   </Row>
                 </Card.Header>
@@ -124,7 +129,15 @@ const PostsList = (props) => {
                     <hr></hr>
                     <Card.Text>{comment.author.username}</Card.Text>
                     <Card.Text>{comment.text}</Card.Text>
-                    <Card.Text> {formatDateTime(comment.createdAt)} { checkUser(comment.author.id) && <Button className="btn btn-light" style={{marginRight: "85%" }} onClick={(event) => {handleShow(event, post._id, comment._id)}}><Trash3Fill/></Button> }</Card.Text>
+                    <Card.Text> {formatDateTime(comment.createdAt)} { 
+                      checkUser(comment.author.id) && 
+                      <div style={{marginRight: "85%", display: "flex"}}>
+                        <EditComment commentData={comment.text} postId={post._id} commentId={comment._id} onClose={handleModalClose}></EditComment>
+                        <Button className="btn btn-light" onClick={(event) => {handleShow(event, post._id, comment._id)}}><Trash3Fill/></Button>
+                      </div>
+                      }
+                    
+                    </Card.Text>
                   </Row>
                 )).reverse()}
 
