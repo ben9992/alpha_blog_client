@@ -3,6 +3,7 @@ import { Container, Row, Col, Form, Button, Image, Modal } from 'react-bootstrap
 import { useNavigate } from "react-router-dom";
 import { IsUserLoggedIn } from "../Auth/Auth";
 import { axios, updateToken } from '../Auth/Axios';
+import ImageUpload from '../Utils/ImageUpload';
 
 const UserDashboard = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -14,24 +15,25 @@ const UserDashboard = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const navigate = useNavigate();
   
+  const getUser = async() => {
+    const userId = localStorage.getItem('userId');
+    const user = await axios.get(`/users/${userId}`).then(user => user).catch(err => {
+      return false
+    })
+
+    if(!user.data)
+        return false
+
+    setUser(user.data)
+  }
+
   useEffect(() => {
     const isUserFound = IsUserLoggedIn()
     if(!isUserFound)
       return navigate('/login');
 
-    const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
     updateToken(token)
-    const getUser = async() => {
-      const user = await axios.get(`/users/${userId}`).then(user => user).catch(err => {
-        return false
-      })
-  
-      if(!user.data)
-          return false
-  
-      setUser(user.data)
-    }
     getUser()
     
   }, [])
@@ -65,6 +67,10 @@ const UserDashboard = () => {
 
     setShowConfirmation(false);
   };
+  
+  const handleUploaded = () => {
+    getUser()
+  }
 
   return !user ? (<></>) : (
     <Container>
@@ -72,6 +78,11 @@ const UserDashboard = () => {
         <Col>
           <h1>Welcome, {user.username}!</h1>
           <Image style={{width: "20%"}} src={process.env.REACT_APP_API_SERVER_URL + user.profileImage} roundedCircle />
+          
+          <hr></hr>
+
+          <ImageUpload onUploaded={handleUploaded}></ImageUpload>
+          
           <Form>
             <Form.Group controlId="oldPassword">
               <Form.Label>Old Password</Form.Label>
@@ -87,6 +98,7 @@ const UserDashboard = () => {
               {passwordError && <Form.Text className="text-danger">{passwordError}</Form.Text>}
               {successAction && <Form.Text className="text-success">{successAction}</Form.Text>}
             </Form.Group>
+            <br></br>
             <Button variant="primary" onClick={handleChangePassword}>Change Password</Button>{' '}
             <br></br>
             <br></br>

@@ -36,7 +36,7 @@ const UserProfile = () => {
       <Row className="row-md-8 justify-content-center">
         <Col>
           <Row className="row-md-8 justify-content-center">
-            <Image style={{width: "20%"}} src={process.env.REACT_APP_API_SERVER_URL + user.profileImage} roundedCircle />
+            <Image style={{width: "20%", padding: "1rem"}} src={process.env.REACT_APP_API_SERVER_URL + user.profileImage} roundedCircle />
           </Row>
           <Row className="row-md-8 justify-content-center text-center">
             <h1>{user.username}</h1>
