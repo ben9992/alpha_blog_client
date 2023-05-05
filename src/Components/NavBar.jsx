@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, Image } from "react-bootstrap";
 import logo from "../Images/logo.png";
 import { axios } from "./Auth/Axios";
+import { IsAdminLoggedIn } from "./Auth/Auth";
 
 function NavBar() {
 	const userId = localStorage.getItem("userId");
 	const [user, setUser] = useState(null);
+	const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
 	const handleLogout = () => {
 		localStorage.removeItem("userId");
 		localStorage.removeItem("token");
@@ -13,6 +15,10 @@ function NavBar() {
 	};
 
 	useEffect(() => {
+		const isAdminLoggedIn = async () => {
+			const res = await IsAdminLoggedIn();
+			setIsAdminLoggedIn(res);
+		};
 		const getUser = async () => {
 			const user = await axios
 				.get(`/users/${userId}`)
@@ -26,6 +32,7 @@ function NavBar() {
 			setUser(user.data);
 		};
 		getUser();
+		isAdminLoggedIn();
 	}, []);
 
 	return (
@@ -39,7 +46,9 @@ function NavBar() {
 					<Nav className="me-auto">
 						<Nav.Link href="/Login">Login</Nav.Link>
 						<Nav.Link href="/Register">Register</Nav.Link>
-						<Nav.Link href="/admin-dashboard">Admin</Nav.Link>
+						{isAdminLoggedIn && (
+							<Nav.Link href="/admin-dashboard">Admin</Nav.Link>
+						)}
 						<Nav.Link href="/user-dashboard">My Settings</Nav.Link>
 						{userId && (
 							<Nav.Link href={`/user/${userId}`}>
