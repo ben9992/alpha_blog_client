@@ -36,7 +36,7 @@ function NavBar() {
 	}, []);
 
 	return (
-		<Navbar bg="dark" variant="dark" expand="lg">
+		<Navbar bg="dark" variant="dark" expand="lg" className="sticky-top">
 			<Container>
 				<Navbar.Brand href="/">
 					<Image style={{ width: "12%" }} src={logo} /> Alpha Blog
