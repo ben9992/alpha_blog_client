@@ -7,13 +7,21 @@ import { AdminDashboard } from "./Components/Admin/AdminDashboard";
 import AdminRoutes from "./Components/Auth/AdminRoutes";
 import UserDashboard from "./Components/User/UserDashboard";
 import UserProfile from "./Components/User/UserProfile";
+import { ThemeProvider } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./Components/NavBar";
 
 function App() {
+	const theme = {
+		// colors: {
+		//   primary: '#007bff',
+		//   secondary: '#28a745',
+		// },
+	};
+
 	return (
-		<>
+		<ThemeProvider theme={theme}>
 			<NavBar></NavBar>
 			<Router>
 				<Routes>
@@ -32,7 +40,7 @@ function App() {
 					<Route path="/user-dashboard" element={<UserDashboard />} />
 				</Routes>
 			</Router>
-		</>
+		</ThemeProvider>
 	);
 }
 

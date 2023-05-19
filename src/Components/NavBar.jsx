@@ -36,7 +36,7 @@ function NavBar() {
 	}, []);
 
 	return (
-		<Navbar bg="dark" variant="dark" expand="lg" className="sticky-top">
+		<Navbar expand="lg" className="sticky-top navbar-custom">
 			<Container>
 				<Navbar.Brand href="/">
 					<Image style={{ width: "12%" }} src={logo} /> Alpha Blog
@@ -44,21 +44,35 @@ function NavBar() {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						<Nav.Link href="/Login">Login</Nav.Link>
-						<Nav.Link href="/Register">Register</Nav.Link>
+						<Nav.Link className="nav-text-custom" href="/Login">
+							התחברות
+						</Nav.Link>
+						<Nav.Link className="nav-text-custom" href="/Register">
+							הרשמה
+						</Nav.Link>
 						{isAdminLoggedIn && (
-							<Nav.Link href="/admin-dashboard">Admin</Nav.Link>
+							<Nav.Link href="/admin-dashboard">מנהל</Nav.Link>
 						)}
-						<Nav.Link href="/user-dashboard">My Settings</Nav.Link>
+						<Nav.Link className="nav-text-custom" href="/user-dashboard">
+							ההגדרות שלי
+						</Nav.Link>
 						{userId && (
-							<Nav.Link href={`/user/${userId}`}>
-								{user ? user.username + "`s " : ""} Profile
+							<Nav.Link className="nav-text-custom" href={`/user/${userId}`}>
+								{user ? user.username + "" : ""} הבלוג של
 							</Nav.Link>
 						)}
+
+						<Nav.Link className="nav-text-custom" href="/">
+							אלפא בלוג
+						</Nav.Link>
 					</Nav>
 
 					<Nav>
-						{userId && <Nav.Link onClick={handleLogout}>Logout</Nav.Link>}
+						{userId && (
+							<Nav.Link className="nav-text-custom" onClick={handleLogout}>
+								התנתקות
+							</Nav.Link>
+						)}
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

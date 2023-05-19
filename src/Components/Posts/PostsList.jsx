@@ -66,7 +66,20 @@ const PostsList = (props) => {
 		const datetimeArray = datetime
 			.substring(0, datetime.lastIndexOf(":"))
 			.split("T");
-		return `${datetimeArray[0]} ${datetimeArray[1]}`;
+
+		let date = new Date(`${datetimeArray[0]} ${datetimeArray[1]}`);
+
+		let formattedDate = [
+			("0" + date.getDate()).slice(-2), // DD
+			("0" + (date.getMonth() + 1)).slice(-2), // MM
+			date.getFullYear(), // YYYY
+		].join("/");
+
+		let formattedTime = [
+			("0" + date.getHours()).slice(-2), // HH
+			("0" + date.getMinutes()).slice(-2), // MM
+		].join(":");
+		return formattedTime + " " + formattedDate;
 	};
 
 	const handleImageClick = (userId) => {
@@ -100,18 +113,18 @@ const PostsList = (props) => {
 			{isUserFound && <NewPost onClose={handleModalClose} />}
 			{posts.map((post) => (
 				<div key={post._id} style={{ padding: "1rem", display: "contents" }}>
-					<Card className="my-3" style={{ width: "70%" }}>
+					<Card className="my-3" style={{ width: "50%", margin: "2rem" }}>
 						<Card.Header>
 							<Row>
 								<Col
 									onClick={() => {
 										handleImageClick(post.user._id);
 									}}
-									className="clickable col-md-1"
+									className="icon clickable col-md-1"
 									style={{ marginRight: "1rem" }}
 								>
 									<Image
-										style={{ width: "100%" }}
+										style={{ width: "180%" }}
 										src={
 											process.env.REACT_APP_API_SERVER_URL +
 											post.user.profileImage
@@ -195,6 +208,7 @@ const PostsList = (props) => {
 									<Form.Group controlId="exampleForm.ControlTextarea1">
 										<Form.Label></Form.Label>
 										<Form.Control
+											style={{ resize: "none" }}
 											as="textarea"
 											rows={3}
 											value={commentText}

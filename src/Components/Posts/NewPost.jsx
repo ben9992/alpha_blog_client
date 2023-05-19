@@ -36,7 +36,11 @@ function NewPost(props) {
 
 	return (
 		<div className="rtl" style={{ margin: "1rem" }}>
-			<Button variant="primary" onClick={handleShowModal}>
+			<Button
+				variant="secondary"
+				style={{ marginRight: "24.5%" }}
+				onClick={handleShowModal}
+			>
 				פוסט חדש
 			</Button>
 
@@ -48,10 +52,10 @@ function NewPost(props) {
 				<Modal.Body>
 					<Form onSubmit={handleSubmit}>
 						<Form.Group controlId="formPostContent">
-							<Form.Label>תוכן</Form.Label>
 							<Form.Control
+								style={{ resize: "none" }}
 								as="textarea"
-								rows={3}
+								rows={7}
 								name="content"
 								placeholder="כתוב\כיתבי תגובה לפוסט"
 								value={postData.content}

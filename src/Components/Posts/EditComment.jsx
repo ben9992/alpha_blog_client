@@ -47,10 +47,10 @@ function EditComment(props) {
         <Modal.Body>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formPostContent">
-              <Form.Label>תוכן</Form.Label>
               <Form.Control
+                style={{ resize: "none" }}
                 as="textarea"
-                rows={3}
+                rows={7}
                 name="content"
                 placeholder="כתוב\כיתבי תגובה"
                 value={commentData.content}
