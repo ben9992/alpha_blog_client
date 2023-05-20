@@ -46,16 +46,16 @@ const UsersTab = () => {
 
 	return (
 		<>
-			<Container>
+			<Container className="rtl">
 				<Table striped bordered hover responsive>
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th>Username</th>
-							<th>Email</th>
-							<th>Created at</th>
-							<th>View</th>
-							<th>Delete</th>
+							<th>שם משתמש</th>
+							<th>אימייל</th>
+							<th>נוצר ב</th>
+							<th>עבור לפרופיל</th>
+							<th>מחק</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -71,7 +71,7 @@ const UsersTab = () => {
 												variant="secondary"
 												onClick={() => handleViewUser(user._id)}
 											>
-												View
+												עבור לפרופיל
 											</Button>
 										</td>
 										<td>
@@ -82,7 +82,7 @@ const UsersTab = () => {
 													setDeleteUserId(user._id);
 												}}
 											>
-												Delete
+												מחק
 											</Button>
 										</td>
 									</tr>

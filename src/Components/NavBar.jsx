@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Nav, Container, Image } from "react-bootstrap";
+import { Navbar, Nav, Container, Image, Col } from "react-bootstrap";
 import logo from "../Images/logo.png";
 import { axios } from "./Auth/Axios";
 import { IsAdminLoggedIn } from "./Auth/Auth";
@@ -36,46 +36,60 @@ function NavBar() {
 	}, []);
 
 	return (
-		<Navbar expand="lg" className="sticky-top navbar-custom">
-			<Container>
-				<Navbar.Brand href="/">
-					<Image style={{ width: "12%" }} src={logo} /> Alpha Blog
-				</Navbar.Brand>
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="me-auto">
-						<Nav.Link className="nav-text-custom" href="/Login">
-							התחברות
+		<Navbar
+			style={{ direction: "rtl" }}
+			expand="lg"
+			className="sticky-top navbar-custom"
+		>
+			<Navbar.Brand href="/">
+				<Container>
+					<Image className="logo" src={logo} /> Alpha Blog
+				</Container>
+			</Navbar.Brand>
+			<Navbar.Toggle aria-controls="basic-navbar-nav" />
+			<Navbar.Collapse id="basic-navbar-nav">
+				<Nav>
+					<Nav.Link className="nav-text-custom" href="/Login">
+						התחברות
+					</Nav.Link>
+					<Nav.Link className="nav-text-custom" href="/Register">
+						הרשמה
+					</Nav.Link>
+					<Nav.Link className="nav-text-custom" href="/PrivacyPolicy">
+						פרטיות
+					</Nav.Link>
+					<Nav.Link className="nav-text-custom" href="/Community">
+						קהילה
+					</Nav.Link>
+					<Nav.Link className="nav-text-custom pro" href="/UpgradePro">
+						שדרוג לפרו
+					</Nav.Link>
+					<Nav.Link className="nav-text-custom" href="/Terms">
+						תנאי שימוש
+					</Nav.Link>
+					{isAdminLoggedIn && <Nav.Link href="/admin-dashboard">מנהל</Nav.Link>}
+					<Nav.Link className="nav-text-custom" href="/user-dashboard">
+						ההגדרות שלי
+					</Nav.Link>
+					{userId && (
+						<Nav.Link className="nav-text-custom" href={`/user/${userId}`}>
+							הבלוג של {user ? user.username + "" : ""}
 						</Nav.Link>
-						<Nav.Link className="nav-text-custom" href="/Register">
-							הרשמה
-						</Nav.Link>
-						{isAdminLoggedIn && (
-							<Nav.Link href="/admin-dashboard">מנהל</Nav.Link>
-						)}
-						<Nav.Link className="nav-text-custom" href="/user-dashboard">
-							ההגדרות שלי
-						</Nav.Link>
-						{userId && (
-							<Nav.Link className="nav-text-custom" href={`/user/${userId}`}>
-								{user ? user.username + "" : ""} הבלוג של
-							</Nav.Link>
-						)}
+					)}
 
-						<Nav.Link className="nav-text-custom" href="/">
-							אלפא בלוג
-						</Nav.Link>
-					</Nav>
+					<Nav.Link className="nav-text-custom" href="/">
+						אלפא בלוג
+					</Nav.Link>
+				</Nav>
 
-					<Nav>
-						{userId && (
-							<Nav.Link className="nav-text-custom" onClick={handleLogout}>
-								התנתקות
-							</Nav.Link>
-						)}
-					</Nav>
-				</Navbar.Collapse>
-			</Container>
+				<Nav>
+					{userId && (
+						<Nav.Link className="nav-text-custom logout" onClick={handleLogout}>
+							התנתקות
+						</Nav.Link>
+					)}
+				</Nav>
+			</Navbar.Collapse>
 		</Navbar>
 	);
 }

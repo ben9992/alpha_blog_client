@@ -31,6 +31,7 @@ code {
 
 .nav-text-custom {
 	color: #000000 !important;
+	white-space: nowrap;
 }
 
 .modal-dialog {
@@ -65,4 +66,19 @@ code {
 	.rounded-circle {
 		width: 60% !important;
 	}
+}
+
+@media (min-width: 992px) {
+	.logout {
+		margin-right: 4rem;
+	}
+}
+
+.pro {
+	color: #ec619f !important;
+}
+
+.logo {
+	width: 20%; /* Adjust the width as per your preference */
+	height: auto; /* Adjust the height as per your preference */
 }

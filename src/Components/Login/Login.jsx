@@ -43,13 +43,13 @@ function Login() {
 
 	return (
 		<Container>
-			<Row className="justify-content-center">
+			<Row className="rtl justify-content-center">
 				<Col xs={12} md={8} lg={6}>
-					<h2>Login</h2>
+					<h2>התחברות</h2>
 					<Form onSubmit={(e) => e.preventDefault()}>
 						{error && <Alert color="danger">{error}</Alert>}
 						<FormGroup>
-							<Label for="username">Username:</Label>
+							<Label for="username">שם משתמש:</Label>
 							<Input
 								type="text"
 								id="username"
@@ -58,7 +58,7 @@ function Login() {
 							/>
 						</FormGroup>
 						<FormGroup>
-							<Label for="password">Password:</Label>
+							<Label for="password">סיסמא:</Label>
 							<Input
 								type="password"
 								id="password"
@@ -66,9 +66,7 @@ function Login() {
 								onChange={(e) => setPassword(e.target.value)}
 							/>
 						</FormGroup>
-						<Button color="primary" onClick={handleLogin}>
-							Login
-						</Button>
+						<Button onClick={handleLogin}>התחברות</Button>
 					</Form>
 				</Col>
 			</Row>

@@ -104,8 +104,7 @@ const PostsList = (props) => {
 	};
 
 	if (IsAdminLogIn === null) {
-		// Render a loading indicator or a placeholder while the data is being fetched
-		return <div>Loading...</div>;
+		return <div>טוען...</div>;
 	}
 
 	return (

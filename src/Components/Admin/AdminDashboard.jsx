@@ -30,22 +30,22 @@ const AdminDashboard = () => {
 
 	return (
 		<Container>
-			<Row className="justify-content-center">
+			<Row className="justify-content-center rtl">
 				<Tabs
 					defaultActiveKey="analytics"
 					id="fill-tab-example"
 					className="mb-3"
 					fill
 				>
-					<Tab eventKey="analytics" title="Analytics">
+					<Tab eventKey="analytics" title="אנליטיקה">
 						<h6>
-							Users Count: {analytics ? analytics.usersData.userCount : ""}
+							מספר משתמשים: {analytics ? analytics.usersData.userCount : ""}
 						</h6>
 						<h6>
-							Posts Count: {analytics ? analytics.postsData.postCount : ""}
+							מספר פוסטים: {analytics ? analytics.postsData.postCount : ""}
 						</h6>
 					</Tab>
-					<Tab eventKey="users" title="Users">
+					<Tab eventKey="users" title="משתמשים">
 						<UsersTab></UsersTab>
 					</Tab>
 					{/* <Tab eventKey="posts" title="Posts"></Tab> */}
