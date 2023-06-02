@@ -37,7 +37,7 @@ function Login() {
 				window.location.reload();
 			}, 200);
 		} catch (error) {
-			setError("Invalid username or password.");
+			setError("שם משתמש או סיסמא לא תקינים.");
 		}
 	};
 

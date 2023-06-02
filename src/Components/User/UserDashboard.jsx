@@ -55,16 +55,16 @@ const UserDashboard = () => {
 
 		// check if new password and confirm password match
 		if (newPassword !== confirmPassword) {
-			setPasswordError("Passwords do not match");
+			setPasswordError("סיסמאות לא תואמות");
 		} else if (oldPassword !== user.password) {
-			setPasswordError("Old password do not match");
+			setPasswordError("סיסמא ישנה לא מתאימה");
 		} else {
 			setPasswordError("");
 			axios
 				.put(`/users/${user._id}`, { password: newPassword })
 				.then((user) => user)
 				.catch((err) => {});
-			setSuccessAction("Password changed succsessfully");
+			setSuccessAction("הסיסמא שונתה בהצלחה");
 		}
 	};
 
